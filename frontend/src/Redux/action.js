@@ -6,7 +6,7 @@ export const GetPendingTask = (payload) => (dispatch) => {
   dispatch({ type: types.GET_TASK_REQUEST });
   return axios
     .get(
-      `https://flamecloud-api.onrender.com/task/gettask/${payload}?status=${data.status}`
+      `https://flamecloudbackend-production.up.railway.app/task/gettask/${payload}?status=${data.status}`
     )
     .then((res) => {
       return dispatch({
@@ -23,7 +23,7 @@ export const GetPendingTask = (payload) => (dispatch) => {
 };
 export const DeleteTask = (payload) => (dispatch) => {
   return axios
-    .delete(`https://flamecloud-api.onrender.com/task/remove`, {
+    .delete(`https://flamecloudbackend-production.up.railway.app/task/remove`, {
       data: payload,
     })
     .then((res) => {
@@ -39,7 +39,10 @@ export const DeleteTask = (payload) => (dispatch) => {
 
 export const AddNewTask = (payload) => (dispatch) => {
   return axios
-    .post(`https://flamecloud-api.onrender.com/task/add`, payload)
+    .post(
+      `https://flamecloudbackend-production.up.railway.app/task/add`,
+      payload
+    )
     .then((res) => {
       return res.data.msg;
     })
@@ -55,7 +58,7 @@ export const GetDoingTask = (payload) => (dispatch) => {
   dispatch({ type: types.GET_TASK_REQUEST });
   return axios
     .get(
-      `https://flamecloud-api.onrender.com/task/gettask/${payload}?status=${data.status}`
+      `https://flamecloudbackend-production.up.railway.app/task/gettask/${payload}?status=${data.status}`
     )
     .then((res) => {
       return dispatch({
@@ -72,7 +75,10 @@ export const GetDoingTask = (payload) => (dispatch) => {
 };
 export const UpdateTaskStatus = (payload) => (dispatch) => {
   return axios
-    .patch(`https://flamecloud-api.onrender.com/task/updatestatus`, payload)
+    .patch(
+      `https://flamecloudbackend-production.up.railway.app/task/updatestatus`,
+      payload
+    )
     .then((res) => {
       return res.data.msg;
     })
@@ -90,7 +96,7 @@ export const GetDoneTask = (payload) => (dispatch) => {
   dispatch({ type: types.GET_TASK_REQUEST });
   return axios
     .get(
-      `https://flamecloud-api.onrender.com/task/gettask/${payload}?status=${data.status}`
+      `https://flamecloudbackend-production.up.railway.app/task/gettask/${payload}?status=${data.status}`
     )
     .then((res) => {
       return dispatch({ type: types.GET_DONE_TASK_SUCCESS, payload: res.data });
