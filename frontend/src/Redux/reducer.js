@@ -4,8 +4,11 @@ const initialState = {
   pending_task: [],
   doing_task: [],
   done_task: [],
+  current_user: {},
   isLoading: false,
   isError: false,
+  task: [],
+  isAuth: false,
 };
 
 export const reducer = (oldState = initialState, action) => {
@@ -17,7 +20,24 @@ export const reducer = (oldState = initialState, action) => {
         isLoading: true,
       };
     }
+    case types.GET_LOGIN_USER_LOGOUT: {
+      return {
+        ...oldState,
+        isLoading: true,
+        current_user: {},
+        isAuth: false,
+      };
+    }
 
+    case types.GET_LOGIN_USER_SUCCESS: {
+      return {
+        ...oldState,
+        isLoading: false,
+        current_user: payload,
+        isError: false,
+        isAuth: true,
+      };
+    }
     case types.GET_PENDING_TASK_SUCCESS: {
       return {
         ...oldState,
@@ -31,6 +51,14 @@ export const reducer = (oldState = initialState, action) => {
         ...oldState,
         isLoading: false,
         doing_task: payload,
+        isError: false,
+      };
+    }
+    case types.GET_ALL_TASK: {
+      return {
+        ...oldState,
+        isLoading: false,
+        task: payload,
         isError: false,
       };
     }

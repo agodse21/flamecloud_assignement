@@ -1,4 +1,3 @@
-import { FaTelegramPlane } from "react-icons/fa";
 import {
   Box,
   Button,
@@ -8,15 +7,26 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
+import TelegramLoginButton from "react-telegram-login";
+import { useDispatch, useSelector } from "react-redux";
+import { LoginUser } from "../Redux/action";
+import "../App.css";
 export const WelComePage = () => {
   const navigate = useNavigate();
-  const Telegram_url = "https://telegram.me/AmolTetrisBot";
-  const HandleTeleBtn = () => {
-    window.open(Telegram_url);
+  const dispatch = useDispatch();
+
+  const handleTelegramResponse = (response) => {
+    if (response) {
+      dispatch(
+        LoginUser({ username: response.username, id: response.id })
+      ).then((res) => {
+        navigate(`/home/${response.id}`);
+      });
+    }
   };
+
   return (
     <Box
       w="50%"
@@ -28,29 +38,21 @@ export const WelComePage = () => {
       boxShadow={"dark-lg"}
     >
       <Flex justifyContent={"center"} alignItems={"center"}>
-        <Heading size={"xl"}>Welcome to FlameCloud's Trello Board!</Heading>
+        <Text fontSize={"3xl"}>Welcome to FlameCloud's Trello Board!</Text>
       </Flex>
-      {/* <Flex mt="50" justifyContent={"center"} alignItems={"center"}>
-        <VStack spacing={30}>
-        
-        </VStack>
-      </Flex> */}
       <Flex
-        w="50%"
         alignItems={"center"}
         p={5}
         m="auto"
-        mt={"50"}
-        borderRadius={40}
-        color={"white"}
-        bgColor="blue.500"
-        onClick={HandleTeleBtn}
+        mt={"20"}
         justifyContent={"center"}
-        gap={3}
         fontSize={20}
         cursor="pointer"
       >
-        <FaTelegramPlane size={35} /> Log in with Telegram
+        <TelegramLoginButton
+          dataOnauth={handleTelegramResponse}
+          botName="AmolTetrisBot"
+        />
       </Flex>
     </Box>
   );

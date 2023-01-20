@@ -17,6 +17,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
+import "../App.css";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { useDispatch } from "react-redux";
 import {
@@ -105,22 +106,22 @@ export const Board = ({ data, user_id }) => {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Handle Task</ModalHeader>
+          <ModalHeader className="font-face-pt">Handle Task</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
+          <ModalBody pb={5} className="font-face-pt">
             <Flex alignItems={"center"} gap={2}>
               {" "}
-              <Heading size={"sm"}>Task Description:</Heading>
+              <Text fontWeight={"bold"} fontSize={"18"} >Task Description:</Text>
               <Text> {data.task_description}</Text>
             </Flex>
             <Flex mt={3} alignItems={"center"} gap={2}>
               {" "}
-              <Heading size={"sm"}>Task Status:</Heading>
+              <Text fontWeight={"bold"} fontSize={"18"}>Task Status:</Text>
               <Text> {data.status}</Text>
             </Flex>
             <Flex mt={3} alignItems={"center"} gap={2}>
               {" "}
-              <Heading size={"sm"}>change task status:</Heading>
+              <Text fontWeight={"bold"} fontSize={"18"}>change task status:</Text>
               <RadioGroup onChange={setRadiovalue} value={Radiovalue}>
                 <Stack direction="row">
                   {data.status == "pending" ? (
@@ -145,7 +146,8 @@ export const Board = ({ data, user_id }) => {
               </RadioGroup>
             </Flex>
             <Button
-              mt={2}
+              mt={5}
+              p={6}
               colorScheme={"blue"}
               onClick={() => handleUpdate(data._id)}
             >

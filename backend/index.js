@@ -8,6 +8,7 @@ const { TaskRouter } = require("./routes/task.route");
 const { TaskController } = require("./controllers/task.controller");
 const { UserController } = require("./controllers/User.controller");
 const { SaveTempUser } = require("./middleware/TempUser");
+const { UserRouter } = require("./routes/user.route");
 const bot = new Telegraf(process.env.BOT_TOKEN);
 const app = express();
 app.use(express.json());
@@ -19,6 +20,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/task", TaskRouter);
+app.use("/user",UserRouter)
 
 bot.startWebhook("/webhook", null, 5000);
 

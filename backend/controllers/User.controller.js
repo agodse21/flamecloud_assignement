@@ -29,28 +29,25 @@ const SignUp = async (req, res) => {
   }
 };
 const Login = async (req, res) => {
-  const { email, password } = req.body;
-  const user = await UserModel.findOne({ email });
-
-  if (user) {
-    const hashed_pass = user.password;
-    const user_id = user._id;
-    bcrypt.compare(password, hashed_pass, function (err, result) {
-      if (err) {
-        res.send({ msg: "Something went wrong try after sometime" });
-      }
-      if (result) {
-        const token = jwt.sign(
-          { user_id: user_id, email: email },
-          process.env.SECRET_KEY
-        );
-        res.send({ msg: "Login succesfull", token });
-      } else {
-        res.send({ msg: "Login Failed" });
-      }
+  const { username, id } = req.body;
+  let user = {
+    name: username,
+    telgram_user_id: id,
+  };
+  let isUser = await UserModel.find({ telgram_user_id: id });
+ 
+  if (isUser.length > 0) {
+    isUser.map((ele) => {
+      res.send({ msg: "Login Successfull!", user: ele });
     });
   } else {
-    res.send({ msg: "user not found" });
+    const new_user = new UserModel(user);
+    await new_user.save();
+    if (new_user) {
+      res.send({ msg: "Login Successfull!", user: new_user });
+    } else {
+      res.send({ msg: "Login Failed" });
+    }
   }
 };
 
@@ -65,6 +62,7 @@ const UserController = {
   Login,
   SignUp,
   LoginUsingTelegram,
+  
 };
 module.exports = {
   UserController,

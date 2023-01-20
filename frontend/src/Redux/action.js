@@ -21,6 +21,30 @@ export const GetPendingTask = (payload) => (dispatch) => {
       })
     );
 };
+
+export const LoginUser = (payload) => (dispatch) => {
+  dispatch({ type: types.GET_TASK_REQUEST });
+  return axios
+    .post(
+      `https://flamecloudbackend-production.up.railway.app/user/login`,
+      payload
+    )
+    .then((res) => {
+      console.log(res)
+      return dispatch({
+        type: types.GET_LOGIN_USER_SUCCESS,
+        payload: res.data.user,
+        msg: res.data.msg,
+      });
+    })
+    .catch((e) =>
+      dispatch({
+        type: types.GET_TASK_FAILURE,
+        payload: e,
+      })
+    );
+};
+
 export const DeleteTask = (payload) => (dispatch) => {
   return axios
     .delete(`https://flamecloudbackend-production.up.railway.app/task/remove`, {
@@ -83,6 +107,23 @@ export const UpdateTaskStatus = (payload) => (dispatch) => {
       return res.data.msg;
     })
 
+    .catch((e) =>
+      dispatch({
+        type: types.GET_TASK_FAILURE,
+        payload: e,
+      })
+    );
+};
+
+export const GetAllTask = (payload) => (dispatch) => {
+  dispatch({ type: types.GET_TASK_REQUEST });
+  return axios
+    .get(
+      `https://flamecloudbackend-production.up.railway.app/task/gettask/${payload}`
+    )
+    .then((res) => {
+      return dispatch({ type: types.GET_ALL_TASK, payload: res.data });
+    })
     .catch((e) =>
       dispatch({
         type: types.GET_TASK_FAILURE,
